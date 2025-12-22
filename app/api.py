@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Request
 from slowapi import Limiter
 from slowapi.util import get_remote_address
-from app.schemas import PromptResponse
+from app.schemas import PromptRequest, PromptResponse
 from app.classifier import classify_prompt
 from app.config import get_settings
 
@@ -12,7 +12,8 @@ router = APIRouter()
 
 @router.post("/select-model")
 @limiter.limit(settings.RATE_LIMIT)
-async def select_model(request: Request, prompt: str) -> PromptResponse:
+async def select_model(request: Request, data: PromptRequest) -> PromptResponse:
+    prompt = data.prompt
     if not prompt.strip():
         raise HTTPException(status_code=400, detail="Empty prompt.")
     if len(prompt) > settings.MAX_PROMPT_LENGTH:
@@ -23,6 +24,7 @@ async def select_model(request: Request, prompt: str) -> PromptResponse:
         output = classification["output"],
         model=classification["model"],
         complexity=classification["complexity"],
-        confidence=classification["confidence"]
+        confidence=classification["confidence"],
+        classification_latency=classification["classification_latency"]
     )
     return response

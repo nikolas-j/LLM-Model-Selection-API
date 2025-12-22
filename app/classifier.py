@@ -9,7 +9,6 @@ client = OpenAI(api_key=settings.OPENAI_API_KEY)
 
 default_model = "gpt-5-mini"
 classifier_model = "gpt-5-nano"
-final_max_tokens = settings.RESPONSE_MAX_TOKENS
 
 # Level up model in case of low confidence
 confidence_threshold = 0.0
@@ -100,5 +99,6 @@ def classify_prompt(prompt: str) -> dict:
         "output": output,
         "model": selected_model,
         "complexity": complexity,
-        "confidence": confidence
+        "confidence": confidence,
+        "classification_latency": classification_latency
     }
