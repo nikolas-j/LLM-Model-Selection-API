@@ -1,8 +1,6 @@
 # LLM Model Selection API
 
-An LLM routing system that automatically classifies prompt complexity and selects the most cost-effective model, reducing API costs by up to 30-80% depending on task complexity, while maintaining response quality. Built with FastAPI and designed for easy integration into existing production workflows.
-
-![Dashboard](screenshot/smart_model_select.png)
+An LLM routing system that automatically classifies prompt complexity and selects the most cost-effective model, reducing API costs by up to 75% depending on task complexity compared with just using the best model, while maintaining response quality. Built with FastAPI and designed for easy integration into existing workflows.
 
 ## Purpose
 
@@ -12,7 +10,7 @@ LLM API costs can quickly spiral out of control when using premium models for ev
 - **Smart Routing**: Routes simple queries to nano, moderate to mini, complex to GPT-5
 - **Confidence Thresholds**: Upgrades model selection when classifier confidence is low
 - **Real-time Savings**: Track cost savings per 1M tokens vs. using only GPT-5
-- **Production Ready**: Rate limiting, CORS support, Docker deployment
+- **Basic deployment**: Rate limiting, CORS support, Docker deployment
 
 ## Cost Savings
 
@@ -34,7 +32,7 @@ Drop this into any existing LLM application:
 import requests
 
 response = requests.post(
-    "http://localhost:8000/api/select-model",
+    "http://your-api-domain.com/api/select-model",
     json={"prompt": "Your user's prompt here"}
 )
 
@@ -67,7 +65,7 @@ OPENAI_API_KEY=your_openai_api_key_here
 
 ```
 
-### 2. Run with Docker
+### 2. Run locally with Docker
 
 ```bash
 # Start backend API (port 8000)
